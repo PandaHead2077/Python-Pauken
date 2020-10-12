@@ -42,5 +42,46 @@ ss.print_gender()
 #isinstance(c, Animal)
 #动态语言的鸭子类型特点决定了继承不像静态语言那样是必须的。
 
-####获取对象信息
+####获取对象信息:
 
+    # 使用type()
+    #如果要判断一个对象是否是函数怎么办？
+import types
+def fn():
+    pass
+    type(fn)==types.FunctionType
+    type(abs)==types.BuiltinFunctionType
+    type(lambda x: x)==types.LambdaType
+    type((x for x in range(10)))==types.GeneratorType
+
+    ##使用isinstance()
+    # 总是优先使用isinstance()判断类型，可以将指定类型及其子类“一网打尽”。
+        #对于class的继承关系来说，使用type()就很不方便。我们要判断class的类型
+        # a = Animal()
+        # d = Dog()
+        # h = Husky()
+        # isinstance(h, Husky)
+        # 还可以判断一个变量是否是某些类型中的一种
+        # isinstance([1, 2, 3], (list, tuple))
+        
+    #使用dir()
+print(dir('ABC'))
+
+
+####只有在不知道对象信息的时候，我们才会去获取对象信息###
+#属性和方法列出来是不够的，配合getattr()、setattr()以及hasattr()，我们可以直接操作一个对象的状态：
+hasattr(obj, 'x') # 有属性'x'吗？
+True
+>>> obj.x
+9
+>>> hasattr(obj, 'y') # 有属性'y'吗？
+False
+>>> setattr(obj, 'y', 19) # 设置一个属性'y'
+>>> hasattr(obj, 'y') # 有属性'y'吗？
+True
+>>> getattr(obj, 'y') # 获取属性'y'
+19
+>>> obj.y # 获取属性'y'
+19
+# 可以传入一个default参数，如果属性不存在，就返回默认值:
+getattr(obj, 'z', 404)
